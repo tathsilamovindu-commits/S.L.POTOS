@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SL POTOS MARKET - $3 PAYPAL LIVE</title>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@400;700;900&display=swap" rel="stylesheet">
+<script src="https://www.paypal.com/sdk/js?client-id=AWimdVBKs4hLVImFBR_p-OEqu7VZE-3o05Oe6hwWPcf2f0Vj9JKvI8tHSX1bv5IPR3wyPrEdCusbUrj2&currency=USD"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Poppins',sans-serif;background:#060608;color:#fff}
+header{position:fixed;top:0;width:100%;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:14px 30px;background:rgba(6,6,8,0.95);backdrop-filter:blur(20px);border-bottom:1px solid #1a1a22}
+.logo{font-family:'Anton',sans-serif;font-size:26px}.logo span{color:#ffbe0b}
+.cart-btn{background:#fff;color:#000;padding:10px 22px;border-radius:100px;font-weight:900;font-size:13px;cursor:pointer}
+.cart-btn b{background:#ff006e;color:#fff;padding:2px 8px;border-radius:10px;margin-left:6px}
+.hero{padding:110px 8% 30px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px}
+.hero h1{font-family:'Anton',sans-serif;font-size:8vw;line-height:.85}
+.hero h1 span{color:transparent;-webkit-text-stroke:2px #fff}
+.hero h1 em{color:#ffbe0b;font-style:normal}
+.controls{max-width:1600px;margin:0 auto;padding:16px 20px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;position:sticky;top:60px;z-index:50;background:rgba(6,6,8,0.95);backdrop-filter:blur(15px)}
+.f{background:#14141a;border:1px solid #222232;padding:9px 16px;border-radius:100px;cursor:pointer;font-size:11px;font-weight:800}
+.f.active{background:#ffbe0b;color:#000}
+.search{background:#14141a;border:1px solid #222232;padding:10px 18px;border-radius:100px;color:#fff;outline:none;width:200px}
+.grid{columns:4 280px;column-gap:14px;max-width:1600px;margin:0 auto;padding:10px 14px 100px}
+.item{break-inside:avoid;margin-bottom:14px;border-radius:20px;overflow:hidden;background:#0f0f13;border:1px solid #1a1a22;transition:.3s}
+.item:hover{transform:translateY(-3px);border-color:#444}
+.img-wrap{position:relative;cursor:pointer}.img-wrap img{width:100%;display:block}
+.price-badge{position:absolute;bottom:10px;left:10px;background:#ffbe0b;color:#000;padding:6px 12px;border-radius:100px;font-weight:900;font-size:13px}
+.tag{position:absolute;top:10px;left:10px;background:rgba(0,0,0,0.6);backdrop-filter:blur(8px);padding:5px 10px;border-radius:100px;font-size:9px;font-weight:800}
+.info{padding:12px 14px}.info h3{font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.info p{font-size:11px;color:#666;margin-top:2px}
+.actions{display:flex;gap:6px;margin-top:10px}
+.btn{flex:1;padding:10px;border-radius:100px;border:none;font-weight:800;font-size:11px;cursor:pointer}
+.btn-cart{background:#1a1a22;color:#fff;border:1px solid #2a2a33}.btn-buy{background:#ffbe0b;color:#000}
+.cart-drawer{position:fixed;right:-420px;top:0;width:420px;max-width:96vw;height:100vh;background:#0a0a0e;border-left:1px solid #1a1a22;z-index:200;transition:.4s;padding:20px;display:flex;flex-direction:column}
+.cart-drawer.open{right:0}
+.cart-items{flex:1;overflow-y:auto;margin-top:16px;display:flex;flex-direction:column;gap:8px}
+.progress{position:fixed;top:0;left:0;height:4px;background:linear-gradient(90deg,#ffbe0b,#ff006e);z-index:300;transition:.2s}
+.loader{text-align:center;padding:30px;color:#444;font-size:11px;letter-spacing:2px}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,0.95);display:none;z-index:250;align-items:center;justify-content:center;padding:20px}
+.modal.active{display:flex}
+@media(max-width:700px){.grid{columns:2 150px}.hero h1{font-size:12vw}}
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+<header><div class="logo">SL <span>POTOS</span> MARKET <small style="font-size:9px;background:#ffbe0b;color:#000;padding:3px 8px;border-radius:10px">PAYPAL LIVE $3</small></div><div class="cart-btn" onclick="toggleCart()">🛒 CART <b id="cartCount">0</b></div></header>
+<div class="hero"><h1>50000<br><span>PHOTOS</span><br><em>$3</em></h1><div style="max-width:380px"><p style="color:#777;font-size:13px;line-height:1.6">Every photo <b style="color:#fff">$3 Standard License</b> - Social Media + Website + YouTube. PayPal Live with your Client ID! Instant download after payment.</p><div style="margin-top:12px;background:#121216;border:1px solid #222232;padding:12px 16px;border-radius:14px;font-size:12px"><b style="color:#ffbe0b">✓ PAYPAL LIVE</b> - Your ID Connected<br><b>✓ $3 Standard</b> - 6000x4000 4K</div></div></div>
+<div class="controls"><div id="filters" style="display:flex;gap:8px;flex-wrap:wrap"></div><input class="search" id="search" placeholder="Search 50000... 🔍"></div>
+<div class="grid" id="grid"></div>
+<div class="loader" id="loader">LOADING 50000 PHOTOS...</div>
+<div class="cart-drawer" id="cartDrawer">
+<div style="display:flex;justify-content:space-between;align-items:center"><h2 style="font-family:Anton;font-size:24px">CART • $3</h2><div onclick="toggleCart()" style="cursor:pointer;background:#1a1a22;width:36px;height:36px;border-radius:50%;display:grid;place-items:center">✕</div></div>
+<div class="cart-items" id="cartItems"></div>
+<div style="border-top:1px solid #222232;padding-top:16px;margin-top:12px"><div style="display:flex;justify-content:space-between"><span style="color:#666">Qty x $3</span><b id="qty">0</b></div><div style="display:flex;justify-content:space-between;margin-top:8px;font-size:22px"><span>Total</span><b id="total" style="color:#ffbe0b">$0.00</b></div><div id="paypal-button-container" style="margin-top:16px"></div><p style="color:#444;font-size:10px;text-align:center;margin-top:8px">🔒 PayPal Secure • Standard License • Instant Download</p></div>
+</div>
+<div class="modal" id="modal"><div style="background:#111115;border:1px solid #222232;border-radius:24px;max-width:700px;width:100%;padding:20px"><img id="mImg" style="width:100%;border-radius:16px"><h2 id="mTitle" style="font-family:Anton;margin-top:12px"></h2><p id="mDesc" style="color:#666;font-size:13px"></p><div style="display:flex;gap:8px;margin-top:14px"><button class="btn btn-cart" onclick="addToCartFromModal()">ADD TO CART</button><button class="btn btn-buy" onclick="buyNowFromModal()">BUY $3</button><button class="btn btn-cart" onclick="closeM()">CLOSE</button></div></div></div>
+<script>
+const cats=['nature','craft','culture','animals','beach','temple','food','city','wild','tea'];
+const titles=['Ella Sunrise','Sigiriya Mist','Box Deer Craft','Yala Leopard','Mirissa Waves','Kandy Temple','Lamprais Feast','Colombo Lights','Wild Elephant','Tea Pluckers','Leaf Art','Paddy Glow','Waterfall','Negombo Boats','Coconut Dream'];
+let photos=[];
+for(let i=1;i<=50000;i++){
+ let cat=cats[i%cats.length];
+ let title=titles[i%titles.length]+' #'+i;
+ let h=300+Math.floor(Math.random()*500);
+ let url=`https://picsum.photos/seed/slpay${i}/600/${h}`;
+ photos.push({id:i,cat,title,desc:`${cat} • Sri Lanka • $3 Standard • Social + Website + YouTube • 4K`,url,price:3});
+}
+let cart=[],visible=0,batch=80,current='all',search='',currentModal=null;
+const grid=document.getElementById('grid');
+const filtersEl=document.getElementById('filters');
+filtersEl.innerHTML=`<div class="f active" data-f="all">ALL 50000</div>`+cats.map(c=>`<div class="f" data-f="${c}">${c.toUpperCase()}</div>`).join('');
+function getFiltered(){let arr=[...photos];if(current!=='all')arr=arr.filter(p=>p.cat===current);if(search!=='')arr=arr.filter(p=>p.title.toLowerCase().includes(search)||p.cat.includes(search));return arr;}
+function render(reset=false){if(reset){grid.innerHTML='';visible=0;}let f=getFiltered();let slice=f.slice(visible,visible+batch);slice.forEach(p=>{let d=document.createElement('div');d.className='item';d.innerHTML=`<div class="img-wrap"><span class="tag">${p.cat.toUpperCase()}</span><span class="price-badge">$3 STANDARD</span><img loading="lazy" src="${p.url}"></div><div class="info"><h3>${p.title}</h3><p>${p.desc}</p><div class="actions"><button class="btn btn-cart" onclick="addToCart(${p.id})">ADD</button><button class="btn btn-buy" onclick="buyNow(${p.id})">BUY $3</button></div></div>`;d.querySelector('.img-wrap').addEventListener('click',()=>openM(p));grid.appendChild(d);});visible+=slice.length;document.getElementById('progress').style.width=(visible/getFiltered().length*100)+'%';document.getElementById('loader').innerText=visible>=getFiltered().length?`ALL ${getFiltered().length} @ $3 LOADED - PAYPAL LIVE!`:`${visible}/${getFiltered().length} LOADED - SCROLL MORE`;}
+function addToCart(id){let p=photos.find(x=>x.id===id);if(!cart.find(c=>c.id===id)){cart.push(p);updateCart();toggleCart(true);}}
+function buyNow(id){addToCart(id);toggleCart(true);}
+function updateCart(){
+ document.getElementById('cartCount').innerText=cart.length;
+ document.getElementById('qty').innerText=cart.length;
+ document.getElementById('cartItems').innerHTML=cart.length===0?'<p style="color:#555;text-align:center;margin-top:40px">Cart empty<br>Add photos!</p>':cart.map((c,i)=>`<div style="display:flex;gap:10px;background:#14141a;padding:10px;border-radius:14px"><img src="${c.url}" style="width:56px;height:56px;border-radius:10px;object-fit:cover"><div style="flex:1"><b style="font-size:12px">${c.title}</b><br><small style="color:#666">$3 Standard</small></div><div onclick="removeCart(${i})" style="cursor:pointer;background:#1a1a22;width:28px;height:28px;border-radius:50%;display:grid;place-items:center">✕</div></div>`).join('');
+ let total=cart.length*3;
+ document.getElementById('total').innerText='$'+total.toFixed(2);
+ renderPayPal();
+}
+function removeCart(i){cart.splice(i,1);updateCart();}
+function toggleCart(open){let d=document.getElementById('cartDrawer');if(open===true)d.classList.add('open');else d.classList.toggle('open');}
+function openM(p){currentModal=p;document.getElementById('mImg').src=p.url.replace('/600/','/1000/');document.getElementById('mTitle').innerText=p.title;document.getElementById('mDesc').innerText=p.desc;document.getElementById('modal').classList.add('active');}
+function closeM(){document.getElementById('modal').classList.remove('active');}
+function addToCartFromModal(){if(currentModal)addToCart(currentModal.id);closeM();}
+function buyNowFromModal(){if(currentModal)buyNow(currentModal.id);closeM();}
+function renderPayPal(){
+ let container=document.getElementById('paypal-button-container');
+ container.innerHTML='';
+ if(cart.length===0)return;
+ let total=(cart.length*3).toFixed(2);
+ paypal.Buttons({
+   style:{layout:'vertical',color:'gold',shape:'pill',label:'paypal'},
+   createOrder:function(data,actions){
+     return actions.order.create({
+       purchase_units:[{description:`SL POTOS - ${cart.length} Photos @ $3 Standard`,amount:{currency_code:'USD',value:total}}]
+     });
+   },
+   onApprove:function(data,actions){
+     return actions.order.capture().then(function(details){
+       alert('🎉 PAYMENT SUCCESS!\\n\\nTransaction ID: '+details.id+'\\nPayer: '+details.payer.name.given_name+'\\nAmount: $'+total+'\\n\\n✅ $'+total+' has been sent to your PayPal!\\nPhotos will now download.');
+       cart.forEach(c=>{let a=document.createElement('a');a.href=c.url.replace('/600/','/3000/');a.download=`SL-POTOS-${c.id}-$3.jpg`;document.body.appendChild(a);a.click();a.remove();});
+       cart=[];updateCart();toggleCart(false);
+     });
+   },
+   onError:function(err){console.log(err);alert('PayPal Error: '+err);}
+ }).render('#paypal-button-container');
+}
+filtersEl.addEventListener('click',e=>{if(e.target.classList.contains('f')){document.querySelectorAll('.f').forEach(x=>x.classList.remove('active'));e.target.classList.add('active');current=e.target.dataset.f;render(true);}});
+document.getElementById('search').addEventListener('input',e=>{search=e.target.value.toLowerCase();render(true);});
+window.addEventListener('scroll',()=>{if(window.innerHeight+window.scrollY>=document.body.offsetHeight-1200){if(visible<getFiltered().length)render();}});
+document.getElementById('modal').addEventListener('click',e=>{if(e.target.id==='modal')closeM();});
+render(true);
+</script>
+</body>
+</html>
